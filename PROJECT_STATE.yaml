@@ -1,8 +1,8 @@
 project: ai-ready-ph-learning-hub
 version: 0.1.0
 phase: scaffold
-current_sprint: 1
-status: starter_vertical_slice
+current_sprint: 2
+status: sprint1_public_shell_verified
 updated_at: 2026-07-14
 source_plan: docs/product/product-brief.md
 product_name: AI Ready PH Learning Hub
@@ -14,7 +14,7 @@ secondary_audiences:
 quality:
   typecheck: passed
   lint: passed
-  unit_tests: passed_11_of_11
+  unit_tests: passed_22_of_22
   production_build: passed
   dependency_audit: passed_0_vulnerabilities
 implemented:

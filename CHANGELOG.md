@@ -15,3 +15,7 @@ All notable changes are recorded here.
 - Runnable Next.js starter experience.
 - Prompt Workbench evaluator, lab state machine, scenario schema, and unit tests.
 
+### Sprint 1 (2026-07-14)
+- Added Prompt Workbench scoring boundary tests (evaluate-prompt.boundaries.test.ts).
+- Added catalog data-contract and link-integrity tests (catalog.test.ts).
+- Confirmed the public shell, design tokens, and Prompt Workbench slice build clean via CI.

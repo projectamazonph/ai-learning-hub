@@ -1,111 +1,133 @@
 # AGENTS.md
 
-> Operational context for AI coding agents working on this repository.
+This file governs every coding or documentation agent working in this repository.
 
-## Project Identity
+## Prime directive
 
-- **Product:** AI Ready PH Learning Hub
-- **Repository:** `projectamazonph/ai-learning-hub`
-- **Purpose:** Practice-first AI learning platform for Filipino VAs, freelancers, and business owners
-- **Core promise:** Learn AI by completing real work, receiving evidence-based feedback, and building proof of competence
+Deliver one verified outcome at a time. Preserve unrelated work. Never invent completion, credentials, integrations, test results, or user data.
 
-## Architecture Principles
+## Deterministic startup
 
-1. **Server-component-first** — Minimize client components. Fetch on the server.
-2. **Practice over lecture** — Every concept ends in a task that produces evidence.
-3. **Competency-based progression** — Track 11 competencies at 5 mastery levels. Completion percentage is insufficient.
-4. **Mobile-first classroom** — Core flows work at 390px. Desktop-only tasks are explicitly labeled.
-5. **Auditable AI** — Every AI run stores model, prompt, rubric version, cost, and timestamp. Raw bodies have short retention.
-6. **Safe by default** — Synthetic client data, PII detection, prompt-injection warnings, confirm-before-action for any external effect.
+1. The repository root is the directory containing this `AGENTS.md` and `package.json`.
+2. Do not search parent directories, home directories, mounted storage, or unrelated repositories.
+3. Read, in order:
+   - `AI_CONTEXT.md`
+   - `PROJECT_STATE.yaml`
+   - `WORKSPACE.md`
+   - the relevant product or technical source document
+   - the current story or task
+4. Use only the commands documented in `WORKSPACE.md` unless the task requires a documented addition.
+5. Environment variable names live in `.env.example`. Never hunt the filesystem for secrets.
+6. If a required credential is absent, implement and test the boundary with a fixture. Report the operator action. Do not scan for keys.
 
-## Tech Stack
+## Authority boundaries
 
-- **Framework:** Next.js with TypeScript strict mode
-- **Database:** PostgreSQL + Prisma
-- **Styling:** CSS Modules + design tokens (Field Manual / Operator's Notebook design system)
-- **Auth:** Secure cookie-based sessions
-- **Payments:** PayMongo (GCash, Maya, bank transfer)
-- **Email:** Resend
-- **Storage:** Object storage for resources, portfolios, certificates
-- **Observability:** Sentry, structured logs, request correlation
-- **Testing:** Vitest, Playwright, Lighthouse
-- **CI:** GitHub Actions, gitleaks
-- **Deployment:** Vercel-compatible
+- Do not commit, push, open a pull request, deploy, modify cloud resources, or send external messages unless the user explicitly requests that action.
+- Do not modify a different repository because it appears related.
+- Do not replace working architecture to match personal preference.
+- Do not add dependencies without documenting the reason in `DECISIONS.md`.
+- Do not use real client, learner, or business data in tests, screenshots, seeds, or prompts.
 
-## AI Platform Layer
+## TDD and Loop Engineering
 
-All AI interactions pass through an internal **AI Gateway** that owns:
+For every functional change:
 
-- Provider adapters and model registry
-- Streaming + structured output validation
-- Timeouts, retries, fallbacks, circuit breakers
-- Usage metering and credit reservation
-- PII/secret detection before provider submission
-- Prompt-injection warnings and policy enforcement
-- Cost, latency, and failure telemetry
+1. State the intended user outcome.
+2. Locate the source of truth.
+3. Write or update a failing test.
+4. Implement the smallest passing change.
+5. Run focused tests.
+6. Inspect the real UI or runtime behavior.
+7. Check logs, accessibility, performance, security, and AI cost where relevant.
+8. Refactor only while tests remain green.
+9. Run the proportional verification suite.
+10. Update `BUILD_LOG.md`, `TEST_LOG.md`, `CHANGELOG.md`, and `PROJECT_STATE.yaml` when the project state changes.
 
-## Key Models
+Never write tests after implementation merely to bless existing behavior. A bug fix must include a regression test that fails before the fix.
 
-| Entity | Purpose |
-|---|---|
-| `User`, `Session` | Auth |
-| `LearnerProfile`, `DiagnosticAttempt` | Onboarding |
-| `LearningPath`, `PathEnrollment` | Outcome paths |
-| `Competency`, `LearnerCompetency` | Skill tracking |
-| `LabDefinition`, `LabScenario`, `LabRun` | Practice labs |
-| `Rubric`, `RubricCriterion`, `Evaluation` | Assessment |
-| `AIRequest`, `UsageLedger`, `CreditWallet` | AI cost |
-| `Portfolio`, `PortfolioArtifact` | Evidence |
-| `Workspace`, `WorkspaceMembership` | Business accounts |
-| `ContentReview` | Content freshness |
+## Layer boundaries
 
-## Directory Structure (Expected)
-
-```
-src/
-  app/          — Next.js App Router pages
-  components/   — Reusable UI components
-  lib/          — Shared utilities, db client, ai gateway
-  server/       — Server actions, API routes
-  styles/       — CSS Modules, design tokens
-prisma/
-  schema.prisma
-  seeds/
-docs/
-  design-brief.md
-  architecture.md
-tests/
-  unit/
-  e2e/
-public/
-.github/
-  workflows/
+```text
+src/features/domain     Pure types, rules, scoring, state machines
+        ↑
+src/data                Catalog and validated content adapters
+        ↑
+src/components          Reusable UI, no persistence ownership
+        ↑
+src/app                 Routes, composition, server boundaries
+        ↑
+external services       Accessed through typed adapters only
 ```
 
-## Data Rules
+- Domain code cannot import React, Next.js, database clients, or provider SDKs.
+- UI cannot call model providers directly.
+- Route handlers and server actions own authorization and mutation boundaries.
+- Provider-specific code stays behind the AI gateway.
+- Admin mutations require an audit event.
+- Workspace-scoped data always requires verified membership and `workspaceId`.
 
-- No known default admin credentials — generate one-time setup token or require env-provided credentials.
-- PayMongo webhook must have verified HMAC signature before processing live payments.
-- Every tenant-scoped query requires `workspaceId` + verified membership.
-- Content has `volatilityLevel` (EVERGREEN, SEMI_VOLATILE, VOLATILE) and `reviewDueAt` for freshness.
+## AI-specific rules
 
-## Commit Convention
+- Every model run records provider, model identifier, configuration, prompt version, scenario version, rubric version, token usage, estimated cost, latency, and outcome state.
+- Reserve credits before a live call and reconcile after it.
+- Never log raw sensitive prompts or uploaded file contents.
+- Detect likely secrets and sensitive personal data before provider submission.
+- Required scenarios use synthetic data.
+- No real external side effects in the MVP.
+- Assessment defaults are version-pinned and regression-tested.
+- A model cannot be the only judge of a certification capstone generated by another model.
+- Tool-specific factual content requires a source and review date.
 
+## Product rules
+
+- Teach outcomes and judgment before tool buttons.
+- Keep lessons short, plain-spoken, and suitable for beginners.
+- Design mobile-first at 390 px.
+- Maintain English-first copy that can support Taglish localization without rewriting mechanics.
+- Reward quality, revision, consistency, and mastery. Do not reward empty clicks.
+- A certificate requires competency evidence.
+
+## Interface rules
+
+- Follow `docs/ux/design-system.md`.
+- Use the Operator's Notebook system: warm surfaces, deep cobalt accent, strong typography, compact application views, restrained motion.
+- No decorative gradients, glass panels, neon robot art, or generic AI dashboard sludge.
+- One primary action per view.
+- Keyboard access, visible focus, reduced motion, clear errors, and sufficient contrast are required.
+
+## Code rules
+
+- Strict TypeScript. No `any`.
+- Prefer pure functions and explicit state machines for business rules.
+- Validate untrusted data with Zod at the boundary.
+- Server components by default. Use client components only for interaction.
+- No `console.log` in committed application code.
+- Comments explain why, not what.
+- One concern per change.
+- Preserve existing content and formatting unless the task explicitly changes them.
+
+## Required verification
+
+Choose the smallest sufficient suite, then run the full suite before a release:
+
+```bash
+npm run typecheck
+npm run lint
+npm run test
+npm run build
 ```
-feat:     new feature
-fix:      bug fix
-docs:     documentation
-test:     testing
-chore:    maintenance, config
-refactor: code restructuring without behaviour change
-curriculum: lesson, lab, or rubric content changes
-```
 
-## Agent Rules
+Do not claim a command passed unless it was run and exited successfully in the current workspace.
 
-1. **No hardcoded AI provider keys** — use env variables or a secrets manager.
-2. **No silent side effects** — announce any mutation before executing. Tier-1 actions require user confirmation.
-3. **No AI-evaluated certificates** — a model should never be the sole judge of a high-stakes certificate produced by another model. Certification capstones require deterministic validation or human moderation.
-4. **Keep raw prompt/output retention short** — configurable. Prefer hashes, metrics, and redacted evidence for long-lived records.
-5. **Never expose provider credentials to the browser.**
-6. **When in doubt, ask.**
+## Definition of done
+
+A story is done only when:
+
+- Acceptance criteria are met.
+- Tests cover the new behavior and important failure paths.
+- Typecheck and lint pass.
+- The changed UI is inspected at mobile and desktop widths when applicable.
+- Security, privacy, accessibility, cost, and tenant scope are considered.
+- Documentation and project logs match reality.
+- No placeholder, disabled assertion, silent catch, fake integration, or unexplained TODO remains in the delivered scope.
+

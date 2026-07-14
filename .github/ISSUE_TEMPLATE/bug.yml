@@ -1,0 +1,52 @@
+name: Bug report
+description: Reproduced product defect using safe data
+title: "[BUG] "
+labels: [bug]
+body:
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - Critical
+        - High
+        - Medium
+        - Low
+    validations:
+      required: true
+  - type: textarea
+    id: symptom
+    attributes:
+      label: User-visible symptom
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Minimal reproduction
+      description: Use synthetic data. Never include credentials or private learner data.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: input
+    id: request
+    attributes:
+      label: Safe request or correlation ID
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment, route, device, and browser
+    validations:
+      required: true
+

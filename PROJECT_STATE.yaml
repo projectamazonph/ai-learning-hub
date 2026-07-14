@@ -1,0 +1,42 @@
+project: ai-ready-ph-learning-hub
+version: 0.1.0
+phase: scaffold
+current_sprint: 1
+status: starter_vertical_slice
+updated_at: 2026-07-14
+source_plan: docs/product/product-brief.md
+product_name: AI Ready PH Learning Hub
+repository_target: projectamazonph/ai-learning-hub
+primary_audience: beginner_filipino_virtual_assistants
+secondary_audiences:
+  - freelancers
+  - business_owners
+quality:
+  typecheck: passed
+  lint: passed
+  unit_tests: passed_11_of_11
+  production_build: passed
+  dependency_audit: passed_0_vulnerabilities
+implemented:
+  - public_marketing_shell
+  - learning_path_catalog
+  - pricing_catalog
+  - dashboard_demo
+  - lab_catalog
+  - prompt_workbench_vertical_slice
+  - lab_run_state_machine
+  - scenario_contract
+planned_integrations:
+  - postgres_prisma
+  - authentication
+  - ai_gateway
+  - usage_credits
+  - paymongo
+  - resend
+  - object_storage
+  - observability
+rules:
+  tdd: required
+  loop_engineering: required
+  external_mutation_without_authority: forbidden
+  real_private_scenario_data: forbidden

@@ -1,0 +1,64 @@
+name: Product story
+description: One testable user outcome
+title: "[STORY] "
+labels: [story]
+body:
+  - type: textarea
+    id: outcome
+    attributes:
+      label: User outcome
+      description: State what the user can do when this story is complete.
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why now
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Governing source documents
+      description: List repository paths.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: In scope
+    validations:
+      required: true
+  - type: textarea
+    id: non_goals
+    attributes:
+      label: Out of scope
+    validations:
+      required: true
+  - type: textarea
+    id: criteria
+    attributes:
+      label: Acceptance criteria
+      description: Use observable pass and fail behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: tests
+    attributes:
+      label: Required tests
+      description: Include failure, authorization, tenant, state, accessibility, and cost coverage when relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Security, privacy, accessibility, performance, and AI cost
+    validations:
+      required: true
+  - type: textarea
+    id: verification
+    attributes:
+      label: Verification commands and manual checks
+    validations:
+      required: true
+

@@ -14,7 +14,10 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "verify": "npm run typecheck && npm run lint && npm run test && npm run build"
+    "verify": "npm run typecheck && npm run lint && npm run test && npm run build",
+    "lint:check": "eslint .",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,md}\"",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "next": "16.2.10",
@@ -28,6 +31,8 @@
     "@types/react-dom": "^19.2.0",
     "eslint": "9.39.5",
     "eslint-config-next": "16.2.10",
+    "lint-staged": "^17.5.1",
+    "prettier": "^3.9.8",
     "typescript": "5.9.3",
     "vitest": "4.1.10"
   },
